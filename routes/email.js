@@ -12,17 +12,17 @@ emailRouter.post('/sendCV', upload.single('attachment'), async (req, res) => {
   try {
       const { firstName, lastName, phone, email, message } = req.body;
       const attachmentPath = req.file.path; // Path to uploaded file
-      const attachmentName = req.file.originalname; // Original filename
-
+    //   const attachmentName = req.file.originalname; // Original filename
+      const decodedAttachmentName = decodeURIComponent(req.file.originalname);
       // Email data
       const msg = {
           to: email,
           from: process.env.SENDER_EMAIL, 
           subject: `${firstName} ${lastName} CV`,
-          html:`<p><strong>Name:</strong>${firstName}</p> <p><strong>SurName:</strong>${lastName}</p>  <p><strong>Email:</strong>${email}</p> <p><strong>Phone:</strong>${phone}</p>   <p><strong>Message:</strong>${message}</p>`,
+          html:`<p><strong>First Name:</strong>${firstName}</p> <p><strong>Last Name:</strong>${lastName}</p>  <p><strong>Email:</strong>${email}</p> <p><strong>Phone:</strong>${phone}</p>   <p><strong>Message:</strong>${message}</p>`,
           attachments: [
               {
-                  filename: attachmentName, 
+                  filename: decodedAttachmentName, 
                   content: req.file.buffer.toString('base64'),
                   type: 'application/pdf', 
                   disposition: 'attachment'
