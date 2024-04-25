@@ -17,23 +17,21 @@ emailRouter.post('/sendCV', upload.single('attachment'), async (req, res) => {
       // Email data
       const msg = {
           to: email,
-          from: 'avetyanvaleri@gmail.com', // Update with your email address
+          from: process.env.SENDER_EMAIL, 
           subject: `${firstName} ${lastName} CV`,
           html:`<p><strong>Name:</strong>${firstName}</p> <p><strong>SurName:</strong>${lastName}</p>  <p><strong>Email:</strong>${email}</p> <p><strong>Phone:</strong>${phone}</p>   <p><strong>Message:</strong>${message}</p>`,
           attachments: [
               {
-                  filename: attachmentName, // Use original filename
+                  filename: attachmentName, 
                   content: req.file.buffer.toString('base64'),
-                  type: 'application/pdf', // Update with correct MIME type if needed
+                  type: 'application/pdf', 
                   disposition: 'attachment'
               }
           ]
       };
 
-      // Send email using SendGrid
       await sgMail.send(msg);
 
-      // Delete uploaded file after sending email
    
 
       res.status(200).json({ message: 'Email sent successfully' });
