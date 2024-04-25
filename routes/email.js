@@ -19,7 +19,7 @@ emailRouter.post('/sendCV', upload.single('attachment'), async (req, res) => {
           to: email,
           from: process.env.SENDER_EMAIL, 
           subject: `${firstName} ${lastName} CV`,
-          html:`<p><strong>Name: </strong>${firstName}</p> <p><strong>SurName: </strong>${lastName}</p>  <p><strong>Email: </strong>${email}</p> <p><strong>Phone: </strong>${phone}</p>   <p><strong>Message: </strong>${message}</p>`,
+          html:`<p><strong>First Name:</strong>${firstName}</p> <p><strong>Last Name:</strong>${lastName}</p>  <p><strong>Email:</strong>${email}</p> <p><strong>Phone:</strong>${phone}</p>   <p><strong>Message:</strong>${message}</p>`,
           attachments: [
               {
                   filename: decodedAttachmentName, 
