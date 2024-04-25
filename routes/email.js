@@ -17,7 +17,7 @@ emailRouter.post('/sendCV', upload.single('attachment'), async (req, res) => {
       // Email data
       const msg = {
           to: email,
-          from: 'karen.ghalachyan1@edu.ysu.am', // Update with your email address
+          from: 'avetyanvaleri@gmail.com', // Update with your email address
           subject: `${firstName} ${lastName} CV`,
           html:`<p><strong>Name:</strong>${firstName}</p> <p><strong>SurName:</strong>${lastName}</p>  <p><strong>Email:</strong>${email}</p> <p><strong>Phone:</strong>${phone}</p>   <p><strong>Message:</strong>${message}</p>`,
           attachments: [
