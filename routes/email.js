@@ -41,5 +41,27 @@ emailRouter.post('/sendCV', upload.single('attachment'), async (req, res) => {
   }
 });
 
+emailRouter.post('/contactForm', upload.single('attachment'), async (req, res) => {
+    try {
+        const { firstName, lastName, phone, email, message } = req.body;
+        // Email data
+        const msg = {
+            to: email,
+            from: process.env.SENDER_EMAIL, 
+            subject: `${firstName} ${lastName} CV`,
+            html:`<p><strong>First Name:</strong>${firstName}</p> <p><strong>Last Name:</strong>${lastName}</p>  <p><strong>Email:</strong>${email}</p> <p><strong>Phone:</strong>${phone}</p>   <p><strong>Message:</strong>${message}</p>`,
+        };
+  
+        await sgMail.send(msg);
+  
+     
+  
+        res.status(200).json({ message: 'Email sent successfully' });
+    } catch (error) {
+        console.error('Error sending email:', error);
+        res.status(500).json({ error: 'Error sending email' });
+    }
+  });
+
 
 module.exports = emailRouter;
