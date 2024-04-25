@@ -16,7 +16,7 @@ emailRouter.post('/sendCV', upload.single('attachment'), async (req, res) => {
       const decodedAttachmentName = decodeURIComponent(req.file.originalname);
       // Email data
       const msg = {
-          to: email,
+          to: "info@giomedex.com",
           from: process.env.SENDER_EMAIL, 
           subject: `${firstName} ${lastName} CV`,
           html:`<p><strong>First Name:</strong>${firstName}</p> <p><strong>Last Name:</strong>${lastName}</p>  <p><strong>Email:</strong>${email}</p> <p><strong>Phone:</strong>${phone}</p>   <p><strong>Message:</strong>${message}</p>`,
