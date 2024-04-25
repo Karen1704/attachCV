@@ -1,5 +1,4 @@
 const emailRouter = require('express').Router();
-const fs = require("fs")
 const multer = require('multer');
 const path = require('path');
 const sgMail = require('@sendgrid/mail');
@@ -7,7 +6,7 @@ const sgMail = require('@sendgrid/mail');
 
 sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
-const upload = multer({ dest: 'uploads/' }); // Configure destination for temporary files
+const upload = multer(); // Configure destination for temporary files
 
 emailRouter.post('/sendCV', upload.single('attachment'), async (req, res) => {
   try {
@@ -24,7 +23,7 @@ emailRouter.post('/sendCV', upload.single('attachment'), async (req, res) => {
           attachments: [
               {
                   filename: attachmentName, // Use original filename
-                  content: fs.readFileSync(attachmentPath, { encoding: 'base64' }),
+                  content: req.file.buffer.toString('base64'),
                   type: 'application/pdf', // Update with correct MIME type if needed
                   disposition: 'attachment'
               }
@@ -35,13 +34,7 @@ emailRouter.post('/sendCV', upload.single('attachment'), async (req, res) => {
       await sgMail.send(msg);
 
       // Delete uploaded file after sending email
-      fs.unlink(attachmentPath, (err) => {
-          if (err) {
-              console.error('Error deleting file:', err);
-          } else {
-              console.log('File deleted successfully');
-          }
-      });
+   
 
       res.status(200).json({ message: 'Email sent successfully' });
   } catch (error) {
