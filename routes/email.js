@@ -48,7 +48,7 @@ emailRouter.post('/contactForm', upload.single('attachment'), async (req, res) =
         const msg = {
             to: "info@giomedex.com",
             from: process.env.SENDER_EMAIL, 
-            subject: `${firstName} ${lastName} CV`,
+            subject: `${firstName} ${lastName}`,
             html:`<p><strong>First Name:</strong>${firstName}</p> <p><strong>Last Name:</strong>${lastName}</p>  <p><strong>Email:</strong>${email}</p> <p><strong>Phone:</strong>${phone}</p>   <p><strong>Message:</strong>${message}</p>`,
         };
   
